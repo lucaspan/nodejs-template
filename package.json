@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-boilerplate",
+  "name": "nodejs-template",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -8,9 +8,8 @@
     "clean": "rimraf .dist",
     "build": "babel ./src --out-dir .dist",
     "server:prod": "pm2-runtime -i 0 .dist/index.js",
-    "dev": "NODE_ENV=development npm-run-all server",
-    "server": "babel-node ./src/index.js",
-    "watch": "nodemon"
+    "dev": "NODE_ENV=development nodemon --exec npm-run-all server",
+    "server": "babel-node ./src/index.js"
   },
   "author": "Lucas Pan",
   "license": "MIT",
