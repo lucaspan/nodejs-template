@@ -1,23 +1,12 @@
 "use strict";
 
-const makeResponse = (
-  res,
-  httpCode,
-  message = null,
-  data = null,
-  debug = null
-) => {
-  return res.status(httpCode).json({
-    status: httpCode,
+const response = (res, statusCode, message = null, data = null, debug = null) => {
+  return res.status(statusCode).json({
+    statusCode: statusCode,
     message: message,
     data: data,
-    debug:
-      process.env.NODE_ENV == "development"
-        ? debug
-          ? debug.toString()
-          : null
-        : false
+    debug: process.env.NODE_ENV == "development" ? debug : false
   });
 };
 
-export default makeResponse;
+export default response;
