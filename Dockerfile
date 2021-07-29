@@ -1,10 +1,10 @@
-FROM node:12.18.1
+FROM node:14.15.4
 
 # Create app directory
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package.json ./
+COPY package* ./
 RUN npm ci
 
 # Bundle app source
