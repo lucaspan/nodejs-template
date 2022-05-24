@@ -1,4 +1,7 @@
-FROM node:14.15.4
+FROM node:14.18.1
+
+ENV TZ=UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Create app directory
 WORKDIR /usr/src/app

@@ -1,16 +1,20 @@
 "use strict";
 
-import _ from "./utilities/env";
 import express from "express";
 import cookieParser from "cookie-parser";
-import logger from "./utilities/logger";
-import requestLogger from "./middlewares/requestLogger";
+import logger from "./utility/logger";
 import cors from "cors";
 import helmet from "helmet";
-import response from "./utilities/response";
-import routes from "./routes";
+import response from "./utility/response";
+import router from "./router";
+import { HTTP_STATUS_CODE } from "./model/common/httpStatusCode";
+import { requestIdGenerator, requestIdLogger, requestLogger } from "./middleware/request";
 
 const app = express();
+
+app.use(requestIdGenerator);
+app.use(requestIdLogger);
+
 app.use(helmet());
 app.use(
   cors({
@@ -23,14 +27,20 @@ app.use(cookieParser());
 
 app.use(requestLogger);
 
-app.use("/api", routes);
+// Health status check
+app.get("/health", async (req, res) => {
+  return response(res, HTTP_STATUS_CODE.OK, "Healthy");
+});
+app.use("/api", router);
 
 app.use((err, req, res, next) => {
   if (err) {
     // This is for pino logger to catch the original error
     res.err = err;
+    const statusCode = err.statusCode || HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR;
+    const message = err.message || "Internal Error";
 
-    return response(res, 500, "Internal Error", null, {
+    return response(res, statusCode, message, null, {
       error: {
         type: err.name,
         message: err.message,
@@ -39,7 +49,7 @@ app.use((err, req, res, next) => {
     });
   }
 
-  next();
+  return next();
 });
 
 app.listen(process.env.PORT, (err) => {

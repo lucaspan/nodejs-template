@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-template",
+  "name": "ezat-currency-exchange-rates-api",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -8,6 +8,7 @@
     "server:prod": "pm2-runtime -i 0 .dist/index.js",
     "dev": "NODE_ENV=development nodemon --exec npm-run-all server:dev",
     "server:dev": "babel-node ./src/index.js",
+    "local": "NODE_ENV=local nodemon --exec npm-run-all server:dev",
     "clean": "rimraf .dist",
     "build": "babel ./src --out-dir .dist"
   },
@@ -15,6 +16,10 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.14.8",
+    "axios": "^0.24.0",
+    "big.js": "^6.1.x",
+    "cls-hooked": "^4.2.2",
+    "cls-proxify": "^2.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -28,12 +33,18 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
+    "@babel/cli": "^7.15.7",
     "@babel/core": "^7.14.8",
+    "@babel/eslint-parser": "^7.16.3",
     "@babel/node": "^7.14.7",
     "@babel/plugin-transform-runtime": "^7.14.5",
     "@babel/preset-env": "^7.14.8",
-    "babel-eslint": "^10.1.0",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
     "nodemon": "^2.0.12"
+  },
+  "engines": {
+    "node": ">=14.18.1",
+    "npm": ">=6.14.10"
   }
 }
