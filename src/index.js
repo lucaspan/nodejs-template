@@ -56,7 +56,7 @@ app.listen(process.env.PORT, (err) => {
   if (err) {
     logger.error({ err }, "Failed to start server");
   } else {
-    logger.info(`Started server on ${process.env.PORT}`);
+    logger.info(`${process.env.NODE_ENV} Started server on ${process.env.PORT}`);
   }
 });
 

@@ -7,7 +7,8 @@ const response = (res, statusCode, message = null, data = null, debug = null) =>
     statusCode: statusCode,
     message: message,
     data: data,
-    debug: isProd() ? false : debug
+    requestId: res.req.requestId,
+    ...(!isProd() && { debug })
   });
 };
 
